@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Wallet, CalendarDays, TrendingUp, PlusCircle } from 'lucide-react';
+import { Wallet, CalendarDays, TrendingUp } from 'lucide-react';
 import ExpenseForm from '../components/ExpenseForm';
 import ExpenseList from '../components/ExpenseList';
 import API from '../api';
@@ -68,7 +68,7 @@ export default function Dashboard() {
       {/* Main Content */}
       <div className="grid lg:grid-cols-2 gap-6">
         <ExpenseForm onAdded={fetchExpenses} />
-        <ExpenseList />
+        <ExpenseList data={[...expenses].slice(-3).reverse()} />
       </div>
     </div>
   );

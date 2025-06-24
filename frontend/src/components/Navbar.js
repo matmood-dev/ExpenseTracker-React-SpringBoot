@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Menu, X, Home, BarChart3, PlusSquare } from 'lucide-react';
+import { Menu, X, Home, BarChart3 } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -14,32 +15,31 @@ export default function Navbar() {
         </button>
 
         <div className="hidden md:flex items-center gap-6">
-          <NavItem icon={<Home className="w-4 h-4" />} label="Home" />
-          <NavItem icon={<BarChart3 className="w-4 h-4" />} label="Dashboard" />
-          <NavItem icon={<PlusSquare className="w-4 h-4" />} label="Add" />
+          <NavItem icon={<Home className="w-4 h-4" />} label="Home" to="/" />
+          <NavItem icon={<BarChart3 className="w-4 h-4" />} label="Expenses" to="/expenses" />
         </div>
       </div>
 
       {open && (
         <div className="md:hidden px-4 pb-4 space-y-2 bg-blue-50">
-          <NavItem icon={<Home />} label="Home" mobile />
-          <NavItem icon={<BarChart3 />} label="Dashboard" mobile />
-          <NavItem icon={<PlusSquare />} label="Add" mobile />
+          <NavItem icon={<Home />} label="Home" to="/" mobile />
+          <NavItem icon={<BarChart3 />} label="Expenses" to="/expenses" mobile />
         </div>
       )}
     </nav>
   );
 }
 
-function NavItem({ icon, label, mobile }) {
+function NavItem({ icon, label, to, mobile }) {
   return (
-    <button
+    <Link
+      to={to}
       className={`flex items-center gap-2 text-blue-700 hover:text-blue-900 transition ${
         mobile ? 'w-full py-2 border-b border-blue-100' : ''
       }`}
     >
       {icon}
       <span>{label}</span>
-    </button>
+    </Link>
   );
 }

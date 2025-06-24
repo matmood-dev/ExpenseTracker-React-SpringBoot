@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import API from '../api';
 import { Trash2, BadgeDollarSign } from 'lucide-react';
 
-export default function ExpenseList() {
+export default function ExpenseList({ data = null }) {
   const [expenses, setExpenses] = useState([]);
 
   const fetchExpenses = async () => {
@@ -16,8 +16,10 @@ export default function ExpenseList() {
   };
 
   useEffect(() => {
-    fetchExpenses();
-  }, []);
+    if (!data) fetchExpenses();
+  }, [data]);
+
+  const list = data || expenses;
 
   return (
     <div className="bg-gradient-to-tr from-white to-blue-50 p-6 rounded-2xl shadow-xl">
@@ -25,7 +27,7 @@ export default function ExpenseList() {
         <BadgeDollarSign className="w-6 h-6" /> Expense List
       </h2>
       <ul className="divide-y">
-        {expenses.map(exp => (
+        {list.map(exp => (
           <li key={exp.id} className="py-4 flex justify-between items-center hover:bg-blue-100 px-3 rounded-md transition">
             <div>
               <p className="text-lg font-medium text-gray-800">{exp.title}</p>
@@ -36,7 +38,6 @@ export default function ExpenseList() {
               </p>
               {exp.description && <p className="text-xs mt-1 text-gray-600 italic">{exp.description}</p>}
             </div>
-
             <div className="flex items-center gap-3">
               <span className="text-green-600 font-semibold text-lg">${exp.amount}</span>
               <button
